@@ -41,7 +41,7 @@
       <!--Added aria-describeby to provide inline instructions to provide more information-->
     </div>
     <div class="control">
-      <label for="biography">Biography</label><textarea id="biography" name="biography" type="text"
+      <label for="biography">Biography><span class="required">*</span></label><textarea id="biography" name="biography" type="text"
         aria-describedby="instructions_biography"></textarea>
       <span id="instructions_biography">Include examples on your skills in JavaScript.</span> <!-- Added the for="biography" in label-->
      <!--Added aria-describeby to provide inline instructions to provide more information-->
@@ -110,7 +110,8 @@
             $referencedElement = $input;
           }
           // R.G. hint: fix next line ;)
-          $error = $('<a>' + message + '</a>');
+          // Each link takes to the error line.
+          $error = $('<a href="#' +$referencedElement.attr('id') + '">' + message + '</a>'); 
           $error.click(function (e) {
             // If we rely on the link's href pointing to the input's ID, it doesn't trigger forms mode in screen readers
             $referencedElement.focus();
@@ -121,7 +122,7 @@
 
           if ($(':not(form):focus').length === 0) {
             // See https://stackoverflow.com/questions/46134247/jquery-setting-focus-doesnt-work-in-ie11/
-
+            $()
           }
         } else {
           if ($input.is(':checkbox')) {
