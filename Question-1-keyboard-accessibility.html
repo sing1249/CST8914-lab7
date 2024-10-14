@@ -193,6 +193,14 @@ article p {
   float: right;
 }
 
+/* Adding focus style to make the focus better visible */
+a:focus,
+    button:focus,
+    input:focus {
+      outline: 2px solid black;
+      outline-offset: 3px;
+    }
+
   </style>
 </head>
 
@@ -217,7 +225,7 @@ article p {
   <div class="newsletter">
     <div class="container">
       <h3>Like the Funion? Consider joining our newsletter!</h3>
-      <input type="text">
+      <input type="text" aria-label="Newsletter signup input text">
       <button type="button" onfocus="getFocus()">Sign up</button></div>
       
     </div>
