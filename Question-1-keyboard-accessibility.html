@@ -197,7 +197,7 @@ article p {
 a:focus,
     button:focus,
     input:focus {
-      outline: 2px solid green;
+      outline: 2px solid #006b3a;
       outline-offset: 3px;
     }
 
@@ -292,7 +292,7 @@ a:focus,
       <div class="container">
         <h3>Like the Funion? Consider joining our newsletter!</h3>
         <input type="text" aria-label="Newsletter signup input text">
-        <button type="button" onfocus="getFocus()">Sign up</button>
+        <button type="button" onclick="getFocus()">Sign up</button> <!-- Changing the onfocus to onclick so a new page does not open -->
       </div>
   
     </div>
