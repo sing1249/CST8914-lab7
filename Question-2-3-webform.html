@@ -119,11 +119,9 @@
           });
           $elementToDescribe.attr('aria-describedby', input + '_description');
           $errorContainer.append('<li>').find('li:last').append($error);
+          //This moves focus to the errors for screen readers.
+          $('fieldset.errors').focus();
 
-          if ($(':not(form):focus').length === 0) {
-            // See https://stackoverflow.com/questions/46134247/jquery-setting-focus-doesnt-work-in-ie11/
-            $()
-          }
         } else {
           if ($input.is(':checkbox')) {
             $input.attr('checked', true);
