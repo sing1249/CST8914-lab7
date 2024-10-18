@@ -136,18 +136,24 @@
       };
 
       $(document).ready(function () {
-        if ($.urlParam('validate')) {
-          validateInput('name', 'Please enter your name!');
-          validateInput('biography', 'Please tell us something about your history!');
-          validateInput('gender', 'Please tell us your gender!');
-          validateInput('accept_agbs', 'You must accept our terms and conditions!');
-
-          if ($('.error').length === 0) {
-            return alert('All inputs are valid.');
+          if ($.urlParam('validate')) {
+            var isValid = true;
+            
+            isValid &= validateInput('name', 'Please enter your name!');
+            isValid &= validateInput('biography', 'Please tell us something about your history!');
+            isValid &= validateInput('gender', 'Please tell us your gender!');
+            isValid &= validateInput('accept_agbs', 'You must accept our terms and conditions!');
+      
+            // This shows success message when input are valid. Otherwise it shows error.
+            if (isValid) {
+              alert('All inputs are valid.');
+            } else {
+              alert('Some inputs are invalid. Please check the highlighted errors.');
+            }
           }
-        }
-      });
-    }).call(void 0);</script>
+        });
+      }).call(void 0);
+      </script>
 
 </body>
 
