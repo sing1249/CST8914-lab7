@@ -41,10 +41,11 @@
       <!--Added aria-describeby to provide inline instructions to provide more information-->
     </div>
     <div class="control">
-      <label for="biography">Biography <span class="required">*</span></label><textarea id="biography" name="biography" type="text"
-        aria-describedby="instructions_biography"></textarea>
-      <span id="instructions_biography">Include examples on your skills in JavaScript.</span> <!-- Added the for="biography" in label-->
-     <!--Added aria-describeby to provide inline instructions to provide more information-->
+      <label for="biography">Biography <span class="required">*</span></label><textarea id="biography" name="biography"
+        type="text" aria-describedby="instructions_biography"></textarea>
+      <span id="instructions_biography">Include examples on your skills in JavaScript.</span>
+      <!-- Added the for="biography" in label-->
+      <!--Added aria-describeby to provide inline instructions to provide more information-->
     </div>
     <fieldset> <!-- Relating the form controls using fieldset and legend -->
       <legend>Gender <span class="required">*</span></legend>
@@ -56,7 +57,7 @@
         <input id="gender_female" name="gender" type="radio" value="female" aria-describedby="missing_gender" />
         <label for="gender_female">Female</label>
       </div> <!-- Added the for="gender_female" in label-->
-      <span id="missing_gender" >Please choose a gender</span>
+      <span id="missing_gender">Please choose a gender</span>
     </fieldset>
     <div class="control">
       <span class="required">*</span>
@@ -93,8 +94,9 @@
         $input = $('[name="' + input + '"]');
 
         if ((value = $.urlParam(input)) === null) {
-          if ($('fieldset.errors').length === 0) {
-            $('form').prepend('<fieldset class="errors"><legend>Errors</legend><ul></ul></fieldset>');
+          if ($('fieldset.errors').length === 0) { //tabindex sets focus to the error. 
+            $('form').prepend('<fieldset class="errors" tabindex="-1"><legend>Errors</legend><ul></ul></fieldset>');
+            $('fieldset.errors').focus();  //This moves focus to the errors for screen readers.
           }
 
           $referencedElement = null;
@@ -111,7 +113,7 @@
           }
           // R.G. hint: fix next line ;)
           // Each link takes to the error line.
-          $error = $('<a href="#' +$referencedElement.attr('id') + '">' + message + '</a>'); 
+          $error = $('<a href="#' + $referencedElement.attr('id') + '">' + message + '</a>');
           $error.click(function (e) {
             // If we rely on the link's href pointing to the input's ID, it doesn't trigger forms mode in screen readers
             $referencedElement.focus();
@@ -119,41 +121,48 @@
           });
           $elementToDescribe.attr('aria-describedby', input + '_description');
           $errorContainer.append('<li>').find('li:last').append($error);
-          //This moves focus to the errors for screen readers.
-          $('fieldset.errors').focus();
 
+          $input.addClass('invalid');
+          return false;
         } else {
           if ($input.is(':checkbox')) {
-            $input.attr('checked', true);
+            $input.prop('checked', true);
           }
 
           if ($input.is(':radio')) {
-            return $input.filter('[value="' + value + '"]').attr('checked', true);
+            return $input.filter('[value="' + value + '"]').prop('checked', true);
           } else {
-            return $input.val(value);
+            $input.val(value);
           }
+
+          // This marks the input valid.
+          $input.removeClass('invalid');
+          return true;
         }
       };
 
+
+
+
       $(document).ready(function () {
-          if ($.urlParam('validate')) {
-            var isValid = true;
-            
-            isValid &= validateInput('name', 'Please enter your name!');
-            isValid &= validateInput('biography', 'Please tell us something about your history!');
-            isValid &= validateInput('gender', 'Please tell us your gender!');
-            isValid &= validateInput('accept_agbs', 'You must accept our terms and conditions!');
-      
-            // This shows success message when input are valid. Otherwise it shows error.
-            if (isValid) {
-              alert('All inputs are valid.');
-            } else {
-              alert('Some inputs are invalid. Please check the highlighted errors.');
-            }
+        if ($.urlParam('validate')) {
+          var isValid = true;
+          // Adding is isValid &=  
+          isValid = validateInput('name', 'Please enter your name!') && isValid;
+          isValid = validateInput('biography', 'Please tell us something about your history!') && isValid;
+          isValid = validateInput('gender', 'Please tell us your gender!') && isValid;
+          isValid = validateInput('accept_agbs', 'You must accept our terms and conditions!') && isValid;
+
+          // This shows success message when input are valid. Otherwise it shows error.
+          if (isValid) {
+            alert('All inputs are valid.');
+          } else {
+            alert('Some inputs are invalid. Please check the highlighted errors.');
           }
-        });
-      }).call(void 0);
-      </script>
+        }
+      });
+    }).call(void 0);
+  </script>
 
 </body>
 
